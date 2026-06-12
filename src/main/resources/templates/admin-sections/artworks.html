@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div id="artworks-tab" class="tab-content fade-in">
+        <div class="table-card">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0">Gallery Inventory</h5>
+                <button class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#addArtModal">
+                    <i class="bi bi-plus-lg me-2"></i> Add New Art
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle admin-datatable w-100">
+                    <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Medium</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each ="artwork : ${artworks}">
+                        <td><img th:src="@{'/images/'+${artwork.imgUrl}}" class="art-thumb"></td>
+                        <td class="fw-bold" th:text="${artwork.title}">Abstract Harmony</td>
+                        <td th:text="${artwork.medium}">Oil on Canvas</td>
+                        <td th:text="'₹' + ${artwork.price}">₹1,200</td>
+                        <td>
+                            <span th:if="${artwork.status == 'Available'}" class="badge bg-success rounded-pill">Available</span>
+                            <span th:if="${artwork.status == 'Reserved'}" class="badge bg-warning  rounded-pill" >Reserved</span>
+                            <span th:if="${artwork.status == 'Sold'}" class="badge bg-danger rounded-pill" >Sold</span>
+                        </td>
+                        <td>
+<!--                            <a th:href="@{/admin/artworks/update}"-->
+<!--                               class="btn btn-sm btn-light rounded-circle" data-bs-toggle="modal" data-bs-target="#addArtModal">-->
+<!--                                <i class="bi bi-pencil"></i>-->
+<!--                            </a>-->
+<!--                            <button class="btn btn-sm btn-light rounded-circle"-->
+<!--                                    th:onclick="'openEditModal(' + ${artwork.id} + ')'">-->
+<!--                                <i class="bi bi-pencil"></i>-->
+<!--                            </button>-->
+<!--                            <a th:href="@{/admin/artwork/delete/{id}(id=${artwork.id})}"-->
+<!--                               class="btn btn-sm btn-light text-danger rounded-circle"-->
+<!--                               onclick="return confirm('Delete this post?')">-->
+<!--                                <i class="bi bi-trash"></i>-->
+<!--                            </a>-->
+
+                            <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                    th:data-id="${artwork.id}"
+                                    data-fetch="/admin/artworks/edit"
+                                    data-update="/admin/artworks/update"
+                                    data-modal="#addArtModal"
+                                    data-title="Edit Artwork"
+                                    onclick="openEdit(this)">
+                                <i class="bi bi-pencil text-primary"></i>
+                            </button>
+                            <form th:action="@{/admin/artworks/delete/{id}(id=${artwork.id})}"
+                                  method="post"
+                                  style="display: inline;"
+                                  onsubmit="return confirm('Delete this artwork?')">
+                                <button type="submit" class="btn btn-sm btn-light text-danger rounded-circle">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <td><img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=100" class="art-thumb"></td>-->
+<!--                        <td class="fw-bold">Abstract Harmony</td>-->
+<!--                        <td>Oil on Canvas</td>-->
+<!--                        <td>₹1,200</td>-->
+<!--                        <td><span class="badge bg-success rounded-pill">Available</span></td>-->
+<!--                        <td>-->
+<!--                            <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil"></i></button>-->
+<!--                            <button class="btn btn-sm btn-light text-danger rounded-circle"><i class="bi bi-trash"></i></button>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td><img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=100" class="art-thumb"></td>-->
+<!--                        <td class="fw-bold">Mountain Serenity</td>-->
+<!--                        <td>Watercolor</td>-->
+<!--                        <td>₹850</td>-->
+<!--                        <td><span class="badge bg-warning text-dark rounded-pill">Reserved</span></td>-->
+<!--                        <td>-->
+<!--                            <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil"></i></button>-->
+<!--                            <button class="btn btn-sm btn-light text-danger rounded-circle"><i class="bi bi-trash"></i></button>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

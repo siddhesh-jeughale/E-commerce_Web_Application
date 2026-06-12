@@ -1,0 +1,1221 @@
+/* =========================================
+   1. VARIABLES & SETUP
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+    /* Color Palette */
+    --primary-color: #4a4e69;
+    --secondary-color: #9a8c98;
+    --accent-color: #c9ada7;
+    --light-color: #f8f5f2; /* Warm off-white */
+    --dark-color: #22223b;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --text-muted: #6c757d;
+
+    /* Effects */
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark-color);
+    line-height: 1.7;
+    background-color: #fff;
+    overflow-x: hidden;
+    padding-top: 0px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, .font-playfair {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--dark-color);
+    letter-spacing: -0.5px;
+}
+
+h2.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.lead {
+    font-weight: 300;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+
+/* =========================================
+   2. NAVBAR DESIGN: "THE FLOATING PILL"
+   ========================================= */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.75); /* Higher transparency */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0.8rem 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease;
+
+    /* Floating positioning */
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto 0; /* 20px from top, centered */
+    border-radius: 50px; /* Pill shape */
+    left: 0;
+    right: 0;
+}
+
+/* Navbar Brand */
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+    color: var(--dark-color) !important;
+}
+
+/* Nav Links */
+.nav-link {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--dark-color) !important;
+    margin: 0 0.8rem;
+    padding: 8px 16px !important;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect: Soft Pill Background */
+.nav-link:hover, .nav-link.active {
+    background-color: var(--dark-color);
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+        /* --- Navbar Dropdown Styling --- */
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            color: #6c757d;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-bottom: 2px;
+        }
+        .dropdown-item i {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+        .dropdown-item:hover,
+        .dropdown-item.active {
+            background-color: #f8f9fa;
+            color: #4a4e69;
+            font-weight: 600;
+        }
+        .dropdown-item:hover i,
+        .dropdown-item.active i {
+            color: #4a4e69;
+        }
+        .dropdown-item.text-danger:hover {
+            background-color: #fff5f5;
+            color: #dc3545 !important;
+        }
+        .dropdown-item.text-danger:hover i {
+            color: #dc3545;
+        }
+        .dropdown-toggle.no-arrow::after {
+            display: none;
+        }
+
+/* Mobile Dropdown Styling */
+@media (max-width: 991px) {
+    .navbar {
+        width: 95%; /* Wider on mobile */
+        margin-top: 15px;
+        border-radius: 20px; /* Less rounded corners on mobile */
+        padding: 1rem;
+    }
+    .navbar-collapse {
+        margin-top: 15px;
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .nav-link {
+        margin: 5px 0;
+        border-radius: 10px;
+    }
+}
+
+/* =========================================
+   3. BUTTONS & UI ELEMENTS
+   ========================================= */
+.btn {
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(74, 78, 105, 0.3);
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: var(--dark-color);
+    border-color: var(--dark-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(74, 78, 105, 0.4);
+}
+
+.btn-outline-light {
+    border-width: 2px;
+}
+
+.btn-outline-light:hover {
+    background-color: #fff;
+    color: var(--dark-color);
+    transform: translateY(-2px);
+}
+
+.bg-light-color {
+    background-color: var(--light-color) !important;
+}
+
+/* =========================================
+   4. HERO CAROUSEL (Home Page)
+   ========================================= */
+.hero-carousel {
+    height: 95vh;
+    min-height: 600px;
+}
+
+.hero-carousel .carousel-item {
+    height: 95vh;
+    min-height: 600px;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Dark overlay for text readability */
+.hero-carousel .carousel-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+}
+
+.carousel-caption-custom {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 80%;
+    max-width: 900px;
+    z-index: 2;
+}
+
+.carousel-caption-custom h1 {
+    font-size: 4.5rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    line-height: 1.1;
+    animation: fadeInUp 1s ease-out;
+}
+
+.carousel-caption-custom p {
+    font-size: 1.4rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 2rem;
+    animation: fadeInUp 1s ease-out 0.2s backwards;
+}
+
+.carousel-btns {
+    animation: fadeInUp 1s ease-out 0.4s backwards;
+}
+
+/* =========================================
+   5. PAGE HEADERS (Sub-pages)
+   ========================================= */
+.page-header {
+    height: 80vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    margin-top: -76px; /* Pull behind navbar */
+    padding-top: 76px;
+    background-attachment: fixed; /* Parallax effect */
+}
+
+/* =========================================
+   6. ART CARDS (Gallery & Shop Core)
+   ========================================= */
+.art-card {
+    border: none;
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.art-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.art-card-img-container {
+    position: relative;
+    overflow: hidden;
+    padding-top: 100%; /* 1:1 Aspect Ratio Square */
+    flex-shrink: 0;
+}
+
+.art-card-img-container img {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.art-card:hover .art-card-img-container img {
+    transform: scale(1.08);
+}
+
+/* Badges */
+.art-card-badge {
+    position: absolute;
+    top: 15px; left: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--dark-color);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 2;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.status-available { background: #e6fcf5; color: #0ca678; }
+.status-reserved { background: #fff9db; color: #f59f00; }
+.status-sold { background: #fff5f5; color: #fa5252; }
+
+/* Overlay Info */
+.art-overlay-info {
+    padding: 1.5rem;
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* =========================================
+   7. SHOP SPECIFIC STYLES
+   ========================================= */
+.original-badge {
+    position: absolute;
+    top: 15px; left: 15px;
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.wishlist-btn {
+    position: absolute;
+    top: 15px; right: 15px;
+    background: rgba(255,255,255,0.9);
+    width: 35px; height: 35px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: none;
+    color: #ccc;
+    transition: all 0.3s ease;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.wishlist-btn:hover, .wishlist-btn.active {
+    color: var(--danger-color);
+    transform: scale(1.1);
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.quantity-btn {
+    width: 25px; height: 25px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.sold-out-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(2px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 4;
+}
+
+.sold-out-text {
+    background: var(--dark-color);
+    color: white;
+    padding: 10px 25px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+/* Cart Button & Modal */
+.cart-summary {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    width: 60px; height: 60px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 25px rgba(74, 78, 105, 0.4);
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+.cart-summary:hover { transform: scale(1.1); }
+
+.cart-count {
+    position: absolute;
+    top: -5px; right: -5px;
+    background: var(--danger-color);
+    color: white;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    font-size: 0.75rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid white;
+}
+
+.cart-modal {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 90%; max-width: 500px;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    z-index: 1002;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.cart-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(34, 34, 59, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1001;
+}
+
+/* =========================================
+   8. FILTER BUTTONS (Gallery & Shop)
+   ========================================= */
+.filter-btn, .year-btn {
+    border: 1px solid #ddd;
+    background: transparent;
+    color: var(--text-muted);
+    padding: 8px 24px;
+    border-radius: 50px;
+    margin: 5px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.filter-btn:hover, .filter-btn.active,
+.year-btn:hover, .year-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(74, 78, 105, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-select {
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    padding: 8px 30px 8px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* =========================================
+   9. EXHIBITIONS & VIDEO
+   ========================================= */
+.exhibition-card .art-card-img-container {
+    padding-top: 60%; /* Shorter Aspect Ratio */
+}
+
+.countdown-box {
+    background: var(--dark-color);
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: flex; justify-content: space-around;
+    text-align: center;
+}
+
+.count-num {
+    font-weight: 700; font-size: 1.2rem; line-height: 1; display: block;
+}
+.count-label {
+    font-size: 0.6rem; text-transform: uppercase; opacity: 0.7; letter-spacing: 1px;
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    background: #000;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border: 0;
+}
+
+/* =========================================
+   10. ABOUT & CONTACT SECTIONS
+   ========================================= */
+.section { padding: 100px 0; }
+
+.about-img {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.process-icon, .info-icon {
+    width: 80px; height: 80px;
+    background: var(--light-color);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: var(--primary-color);
+    font-size: 2rem;
+    transition: var(--transition);
+}
+
+.process-item:hover .process-icon {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.feature-box, .info-box {
+    padding: 2rem;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.feature-box:hover, .info-box:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-md);
+}
+
+.info-icon { /* Smaller variant for contact boxes */
+    width: 50px; height: 50px; font-size: 1.2rem; margin-bottom: 1rem;
+}
+
+/* Contact Form */
+.form-control, .form-select {
+    border-radius: 12px;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    background-color: #fcfcfc;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 4px rgba(74, 78, 105, 0.1);
+    border-color: var(--primary-color);
+    background-color: #fff;
+}
+
+/* Map Wrapper */
+.map-wrapper {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 5px solid white;
+}
+
+/* Commission Timeline */
+.step-circle {
+    width: 60px; height: 60px;
+    background: var(--dark-color);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    margin: 0 auto 1rem;
+    box-shadow: 0 5px 15px rgba(34, 34, 59, 0.3);
+}
+
+/* Accordion (FAQ) */
+.accordion-item {
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 12px !important;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+.accordion-button { background-color: white; font-weight: 500; padding: 1.2rem; }
+.accordion-button:not(.collapsed) {
+    background-color: var(--light-color);
+    color: var(--primary-color);
+    box-shadow: none;
+}
+.accordion-button:focus { box-shadow: none; }
+
+/* =========================================
+   11. STATS & TESTIMONIALS
+   ========================================= */
+.stats-counter {
+    background-color: var(--dark-color);
+    color: #fff;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 3.5rem; font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-color);
+    display: block; line-height: 1;
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   15. CLASSIC PREMIUM TESTIMONIALS
+   ========================================= */
+.testimonials-section {
+    background-color: var(--light-color); /* Matches About/Gallery bg */
+    padding: 100px 0;
+    position: relative;
+}
+
+/* The Card */
+.testimonial-card {
+    background: #fff;
+    padding: 4rem 3rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    margin: 10px; /* Space for hover lift */
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Big Quote Icon */
+.testimonial-quote-icon {
+    font-size: 3rem;
+    color: var(--accent-color);
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    opacity: 0.3; /* Subtle watermark look */
+    line-height: 1;
+}
+
+/* Text Styling */
+.quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--dark-color);
+    margin: 1rem 0 2rem;
+    line-height: 1.8;
+    position: relative;
+    z-index: 2;
+}
+
+/* Author Layout */
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 1.5rem;
+    width: 100%;
+}
+
+.testimonial-author img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 3px solid var(--light-color);
+}
+
+.testimonial-author h5 {
+    margin-bottom: 2px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Carousel Indicators (Dots) */
+.testimonial-indicators {
+    margin-bottom: -50px;
+    position: absolute;
+    bottom: 0;
+}
+
+.testimonial-indicators [data-bs-target] {
+    background-color: var(--primary-color);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 6px;
+    opacity: 0.3;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.testimonial-indicators .active {
+    opacity: 1;
+    transform: scale(1.3);
+    background-color: var(--dark-color);
+}
+
+/* Fix Slide Height */
+/* .carousel-item {
+    padding-bottom: 20px;
+
+} */
+/* =========================================
+   12. ORDERS
+   ========================================= */
+           .page-wrapper {
+               padding-top: 120px;
+               padding-bottom: 80px;
+               min-height: 90vh;
+           }
+   /* =========================================
+      12. FAVOURITES
+      ========================================= */
+            .page-wrapper {
+                padding-top: 120px;
+                padding-bottom: 80px;
+                min-height: 90vh;
+            }
+
+            /* Fav Card Specific */
+            .fav-card-img {
+                height: 200px;
+                object-fit: cover;
+                width: 100%;
+                border-radius: 12px 12px 0 0;
+            }
+
+            .fav-card {
+                border: none;
+                border-radius: 12px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                transition: transform 0.3s;
+                border: 1px solid rgba(0, 0, 0, 0.03);
+            }
+
+            .fav-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+
+/* =========================================
+   12. FOOTER
+   ========================================= */
+footer {
+    background-color: var(--dark-color);
+    color: rgba(255,255,255,0.7);
+    padding: 80px 0 30px;
+    font-size: 0.95rem;
+}
+
+footer h3 { color: #fff; margin-bottom: 1.5rem; }
+footer h5 { color: #fff; font-size: 1.1rem; margin-bottom: 1.5rem; }
+
+.footer-links a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+.footer-links a:hover { color: var(--accent-color); padding-left: 5px; }
+
+.social-icons a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    margin-right: 10px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+.social-icons a:hover { background: var(--accent-color); transform: translateY(-3px); }
+
+
+ /* --- Admin Specific Layout --- */
+
+ /* Sidebar */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            background-color: var(--dark-color); /* Ensure --dark-color is defined in css/style.css or use #22223b */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding-top: 20px;
+            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .sidebar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+            padding: 0 25px;
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        .nav-link-admin {
+            display: flex;
+            align-items: center;
+            padding: 12px 25px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: 0.3s;
+            border-left: 3px solid transparent;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .nav-link-admin:hover, .nav-link-admin.active {
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border-left-color: #c9ada7; /* Accent color */
+        }
+
+        .nav-link-admin i { margin-right: 15px; font-size: 1.1rem; }
+
+        /* Main Content Wrapper */
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        /* Top Bar */
+        .admin-topbar {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        /* Content Management Styles */
+        .page-edit-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .cms-pill-nav .nav-link {
+            color: #6c757d;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-weight: 500;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+        }
+
+        .cms-pill-nav .nav-link.active {
+            background-color: #4a4e69; /* Primary color */
+            color: white;
+            border-color: #4a4e69;
+        }
+
+        /* Tables & Lists */
+        .table-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .table thead th {
+            border-bottom: 2px solid #f0f0f0;
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            padding-bottom: 15px;
+        }
+
+        .table tbody td {
+            vertical-align: middle;
+            padding: 15px 0.75rem;
+            color: #22223b;
+            border-bottom: 1px solid #f8f8f8;
+        }
+
+        .admin-thumb {
+            width: 60px; height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .art-thumb {
+            width: 50px; height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* List Group Customization */
+        .list-group-item {
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 12px !important;
+            transition: transform 0.2s;
+        }
+        .list-group-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Stat Cards */
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-icon {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 20px;
+        }
+
+        /* Fix map height in mobile */
+        @media (max-width: 768px) {
+            .map-wrapper { height: 300px; }
+        }
+
+/* =========================================
+   16. ADMIN UI MODERNIZATION (DataTables & Polish)
+   ========================================= */
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    padding: 5px 15px;
+    margin-left: 10px;
+    outline: none;
+    transition: all 0.3s;
+}
+.dataTables_wrapper .dataTables_filter input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(74, 78, 105, 0.2);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: var(--primary-color) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50%;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: var(--light-color) !important;
+    color: var(--primary-color) !important;
+    border: none !important;
+    border-radius: 50%;
+}
+.table-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0,0,0,0.02);
+}
+.admin-datatable th {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom: 2px solid #f0f0f0 !important;
+}
+.admin-datatable td {
+    vertical-align: middle;
+    padding: 15px 10px;
+}
+.tracking-wider {
+    letter-spacing: 1px;
+}
+
+        /* Mobile Responsive */
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+        }
+
+        /* =========================================
+           14. CHECKOUT SPECIFIC STYLES
+           ========================================= */
+
+              .checkout-section { padding-top: 120px; padding-bottom: 80px; }
+
+                   .checkout-card {
+                       background: #fff;
+                       border-radius: 16px;
+                       border: 1px solid rgba(0,0,0,0.05);
+                       box-shadow: var(--shadow-sm);
+                       padding: 30px;
+                       margin-bottom: 20px;
+                   }
+
+                   .checkout-header {
+                       font-family: 'Playfair Display', serif;
+                       font-weight: 700;
+                       border-bottom: 2px solid #f8f5f2;
+                       padding-bottom: 15px;
+                       margin-bottom: 25px;
+                   }
+
+                   /* Order Summary Items */
+                   .order-item {
+                       display: flex; align-items: center;
+                       padding-bottom: 15px; margin-bottom: 15px;
+                       border-bottom: 1px solid #eee;
+                   }
+                   .order-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+                   .order-thumb {
+                       width: 70px; height: 70px;
+                       border-radius: 12px; object-fit: cover;
+                       margin-right: 15px;
+                   }
+
+                   /* Payment Options */
+                   .payment-option {
+                       border: 1px solid #eee;
+                       border-radius: 12px;
+                       padding: 15px;
+                       margin-bottom: 10px;
+                       cursor: pointer;
+                       transition: all 0.3s;
+                   }
+                   .payment-option.selected {
+                       border-color: var(--primary-color);
+                       background-color: #f8f5f2;
+                   }
+
+                   .form-label { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+                   .form-control, .form-select {
+                       border-radius: 10px;
+                       padding: 12px;
+                       border: 1px solid #e0e0e0;
+                   }
+                   .form-control:focus {
+                       border-color: var(--primary-color);
+                       box-shadow: 0 0 0 4px rgba(74, 78, 105, 0.1);
+                   }
+
+    /* =========================================
+       13. SUCCESS PAGE STYLE
+       ========================================= */
+
+               .success-wrapper {
+                   min-height: 80vh;
+                   display: flex;
+                   align-items: center;
+                   justify-content: center;
+                   padding-top: 80px; /* Offset for fixed navbar */
+                   background-color: #f8f9fa;
+               }
+
+               .success-card {
+                   background: white;
+                   border-radius: 20px;
+                   padding: 50px 40px;
+                   max-width: 600px;
+                   width: 100%;
+                   text-align: center;
+                   box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+                   animation: slideUp 0.6s ease-out;
+               }
+
+               /* Animated Icon */
+               .icon-box {
+                   width: 100px; height: 100px;
+                   background-color: #e6fcf5;
+                   color: #0ca678; /* Success Green */
+                   border-radius: 50%;
+                   display: flex; align-items: center; justify-content: center;
+                   margin: 0 auto 30px;
+                   font-size: 3.5rem;
+                   animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s backwards;
+               }
+
+               /* Order Details Box */
+               .order-details-box {
+                   background-color: #f8f9fa;
+                   border-radius: 12px;
+                   padding: 20px;
+                   margin: 30px 0;
+                   text-align: left;
+                   border: 1px solid #eee;
+               }
+
+               .detail-row {
+                   display: flex;
+                   justify-content: space-between;
+                   margin-bottom: 10px;
+                   font-size: 0.95rem;
+               }
+               .detail-row:last-child { margin-bottom: 0; }
+
+               .detail-label { color: var(--text-muted); }
+               .detail-value { font-weight: 600; color: var(--dark-color); }
+
+               /* Animations */
+               @keyframes slideUp {
+                   from { opacity: 0; transform: translateY(40px); }
+                   to { opacity: 1; transform: translateY(0); }
+               }
+               @keyframes scaleIn {
+                   from { opacity: 0; transform: scale(0.5); }
+                   to { opacity: 1; transform: scale(1); }
+               }
+
+
+/* =========================================
+   13. ANIMATIONS
+   ========================================= */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+.fade-in { animation: fadeInUp 0.8s ease-out forwards; }
+.fade-in-left { animation: fadeInUp 0.8s ease-out forwards; } /* Fallback to fade up for simplicity */
+.fade-in-right { animation: fadeInUp 0.8s ease-out forwards; }
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+.delay-4 { animation-delay: 0.8s; }

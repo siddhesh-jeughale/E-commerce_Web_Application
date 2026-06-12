@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div id="orders-tab" class="tab-content fade-in">
+    <div class="table-card">
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+            <h5 class="mb-0 font-playfair">Manage Orders</h5>
+
+            <div class="d-flex gap-2">
+                <input type="text" class="form-control form-control-sm rounded-pill" placeholder="Search Order ID or Name...">
+                <select class="form-select form-select-sm rounded-pill" style="width: 182px;">
+                    <option value="all">All Orders</option>
+                    <option value="PROCESSING">Processing</option>
+                    <option value="SHIPPED">Shipped</option>
+                    <option value="DELIVERED">Delivered</option>
+                    <option value="CANCELLED">Cancelled</option>
+                </select>
+                <button class="btn btn-sm btn-primary rounded-circle"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle admin-datatable w-100">
+                <thead class="table-light">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order:${orders}">
+                    <td class="fw-bold text-primary" th:text="${order.orderNumber}">#ORD-8892</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2" style="width:35px; height:35px; font-size:0.8rem;">SJ</div>
+                            <div>
+                                <span class="d-block fw-bold" th:text="${order.user.username}">Sarah Jenkins</span>
+                                <small class="text-muted" th:text="${order.user.email}">sarah@example.com</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td th:text="${#temporals.format(order.createdAt, 'MMM dd, yyyy')}">Oct 24, 2024</td>
+                    <td class="fw-bold" th:text="'₹' + ${order.total}">₹2,350</td>
+                    <td><span th:text="${order.status}"
+                              th:class="${
+    order.status.name() == 'DELIVERED' ? 'badge bg-success rounded-pill' :
+    order.status.name() == 'SHIPPED' ? 'badge bg-info rounded-pill' :
+    order.status.name() == 'CANCELLED' ? 'badge bg-danger rounded-pill' :
+    'badge bg-warning text-dark rounded-pill'
+}">Processing</span></td>
+                    <td class="text-end">
+<!--                        <button class="btn btn-sm btn-light rounded-circle" onclick="viewAdminOrder('ORD-8892', 'Sarah Jenkins', 'Processing')"><i class="bi bi-eye"></i></button>-->
+                        <button class="btn btn-sm btn-light rounded-circle"
+                                data-bs-toggle="modal"
+                                th:attr="data-bs-target='#adminOrderModal_' + ${order.id}">
+                            <i class="bi bi-eye"></i>
+                        </button>
+
+
+                        <button class="btn btn-sm btn-light text-success rounded-circle"><i class="bi bi-printer"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--        AdminOrderModel-->
+<div th:each="order:${orders}">
+    <div class="modal fade" th:id="'adminOrderModal_' + ${order.id}" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+
+                <div class="modal-header border-bottom pb-3">
+                    <div>
+                        <h5 class="modal-title font-playfair fw-bold"
+                            id="adminModalOrderId"
+                            th:text="'Order #' + ${order.orderNumber}">Order #ORD-8892</h5>
+                        <small class="text-muted"
+                               th:text="'Placed on ' + ${#temporals.format(order.createdAt, 'MMM dd, yyyy')} + ' via ' + ${order.paymentMethod}">Placed on Oct 24, 2024 via Credit Card</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body p-4">
+                    <div class="row g-4">
+                        <div class="col-lg-8 border-end">
+                            <h6 class="text-muted small fw-bold text-uppercase mb-3">Items Ordered</h6>
+
+                            <div class="d-flex align-items-center mb-3" th:each="item : ${order.items}">
+                                <img th:src="@{'/images/' + ${item.artwork.imgUrl}}"
+                                     width="50" height="50"
+                                     class="rounded-3 me-3 border"
+                                     style="object-fit:cover;">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0 fw-bold"  th:text="${item.artwork.title}">Abstract Harmony</h6>
+                                    <small class="text-muted" th:text="${item.artwork.medium}">Oil on Canvas</small>
+                                </div>
+                                <div class="fw-bold" th:text="'₹' + ${item.price}">₹1,200</div>
+                            </div>
+
+                            <!--                                            <div class="d-flex align-items-center mb-3">-->
+                            <!--                                                <img src="https://plus.unsplash.com/premium_photo-1664013263421-91e3a8101259?w=80" class="rounded-3 me-3 border" width="50" height="50" style="object-fit:cover;">-->
+                            <!--                                                <div class="flex-grow-1">-->
+                            <!--                                                    <h6 class="mb-0 fw-bold">Urban Dreams</h6>-->
+                            <!--                                                    <small class="text-muted">Print</small>-->
+                            <!--                                                </div>-->
+                            <!--                                                <div class="fw-bold">₹1,100</div>-->
+                            <!--                                            </div>-->
+
+                            <hr class="my-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span>Subtotal</span>
+                                <span th:text="'₹' + ${order.subtotal}">₹2,300</span></div>
+                            <div class="d-flex justify-content-between mb-1">
+                                <span>Shipping</span>
+                                <span th:text="'₹' + ${order.shipping}">₹50</span></div>
+                            <div class="d-flex justify-content-between mt-2 pt-2 border-top">
+                                <span class="fw-bold fs-5">Total</span>
+                                <span class="fw-bold fs-5 text-primary" th:text="'₹' + ${order.total}">₹2,350</span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-4">
+                                <h6 class="text-muted small fw-bold text-uppercase mb-2">Customer</h6>
+                                <p class="mb-0 fw-bold" id="adminModalCustomer" th:text="${order.user.username}">Sarah Jenkins</p>
+                                <p class="mb-0 small text-muted" th:text="${order.user.email}">sarah@example.com</p>
+                                <!--                                                <p class="mb-0 small text-muted">123 Art St, New York, NY</p>-->
+                            </div>
+
+                            <div class="bg-light p-3 rounded-3">
+                                <!--                                <label class="form-label small fw-bold text-dark">Update Status</label>-->
+                                <!--                                <select class="form-select form-select-sm rounded-pill mb-3" id="statusSelect">-->
+                                <!--                                    <option value="Processing">Processing</option>-->
+                                <!--                                    <option value="Shipped">Shipped</option>-->
+                                <!--                                    <option value="Delivered">Delivered</option>-->
+                                <!--                                    <option value="Cancelled">Cancelled</option>-->
+                                <!--                                </select>-->
+
+                                <!--                                <label class="form-label small fw-bold text-dark">Tracking #</label>-->
+                                <!--                                <input type="text" class="form-control form-control-sm rounded-pill mb-3" placeholder="Enter Tracking ID">-->
+
+                                <!--                                <button class="btn btn-primary w-100 rounded-pill btn-sm" onclick="saveOrderStatus()">Save Changes</button>-->
+                                <form th:action="@{/admin/orders/update-status}" method="post">
+
+                                    <input type="hidden"
+                                           name="orderNumber"
+                                           th:value="${order.orderNumber}">
+
+                                    <label class="form-label small fw-bold text-dark">Update Status</label>
+
+                                    <select class="form-select form-select-sm rounded-pill mb-3"
+                                            name="status"
+                                            id="modalStatus">
+
+                                        <option value="PROCESSING"
+                                                th:selected="${order.status.name() == 'PROCESSING'}">Processing</option>
+                                        <option value="SHIPPED"
+                                                th:selected="${order.status.name() == 'SHIPPED'}">Shipped</option>
+                                        <option value="DELIVERED"
+                                                th:selected="${order.status.name() == 'DELIVERED'}">Delivered</option>
+                                        <option value="CANCELLED"
+                                                th:selected="${order.status.name() == 'CANCELLED'}">Cancelled</option>
+
+                                    </select>
+
+                                    <button type="submit"
+                                            class="btn btn-primary w-100 rounded-pill btn-sm">
+                                        Save Changes
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Artistry Studio</title>
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+</head>
+
+<body style="background-color: #f4f6f9;padding-top: 0; overflow-x: hidden;">
+
+<!--  SIDEBAR FRAGMENT -->
+
+<div th:replace="~{fragments/admin-sidebar :: sidebar(activeTab=${activeTab})}"></div>
+
+<div class="main-content">
+    <!--  TOPBAR FRAGMENT -->
+    <!-- Pass dynamic title from controller -->
+    <div th:replace="~{fragments/admin-topbar :: topbar(pageTitle=${pageTitle})}"></div>
+
+
+    <!--  DYNAMIC CONTENT - Changes per section -->
+    <div th:replace="~{${sectionContent}}"></div>
+        <!-- Each controller loads specific content here -->
+<!--    <div th:replace="~{${sectionContent} :: content}"></div>-->
+
+</div>
+
+
+
+<!--  MODALS FRAGMENT -->
+<div th:replace="~{fragments/admin-modals :: allModals}"></div>
+
+
+<!--<script>-->
+<!--    function openEditModal(id) {-->
+
+<!--        fetch('/admin/artworks/edit/' + id)-->
+<!--            .then(response => response.json())-->
+<!--            .then(data => {-->
+<!--                // Populate form fields-->
+<!--                document.querySelector('#addArtModal input[name="title"]').value = data.title;-->
+<!--                document.querySelector('#addArtModal select[name="medium"]').value = data.medium;-->
+<!--                document.querySelector('#addArtModal input[name="price"]').value = data.price;-->
+<!--                document.querySelector('#addArtModal select[name="category"]').value = data.category;-->
+<!--                document.querySelector('#addArtModal input[name="size"]').value = data.size;-->
+<!--                document.querySelector('#addArtModal input[name="status"][value="' + data.status + '"]').checked = true;-->
+
+<!--                // Change form action to update-->
+<!--                document.querySelector('#addArtModal form').action = '/admin/artworks/update';-->
+
+<!--                // Add hidden ID field-->
+<!--                let idInput = document.createElement('input');-->
+<!--                idInput.type = 'hidden';-->
+<!--                idInput.name = 'id';-->
+<!--                idInput.value = data.id;-->
+<!--                document.querySelector('#addArtModal form').appendChild(idInput);-->
+
+<!--                // Change modal title-->
+<!--                document.querySelector('#addArtModal .modal-title').textContent = 'Edit Artwork';-->
+
+<!--                // Show modal-->
+<!--                new bootstrap.Modal(document.getElementById('addArtModal')).show();-->
+<!--            });-->
+<!--    }-->
+
+<!--    // Reset modal when closed-->
+<!--    document.getElementById('addArtModal').addEventListener('hidden.bs.modal', function () {-->
+<!--        document.querySelector('#addArtModal form').action = '/admin/artworks/add';-->
+<!--        document.querySelector('#addArtModal .modal-title').textContent = 'Add New Artwork';-->
+<!--        document.querySelector('#addArtModal form').reset();-->
+<!--        let idInput = document.querySelector('#addArtModal input[name="id"]');-->
+<!--        if (idInput) idInput.remove();-->
+<!--    });-->
+<!--</script>-->
+
+
+<!--  SCRIPTS -->
+<!-- jQuery (required for DataTables) -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script th:src="@{/js/main.js}" src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Initialize DataTables -->
+<script>
+    $(document).ready(function() {
+        // Initialize all tables with the 'admin-datatable' class
+        $('.admin-datatable').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [5, 10, 25, 50],
+            "language": {
+                "search": "_INPUT_",
+                "searchPlaceholder": "Search records..."
+            }
+        });
+    });
+</script>
+</body>
+</html>

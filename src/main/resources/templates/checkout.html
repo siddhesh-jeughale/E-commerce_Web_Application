@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout | Artistry Studio</title>
+
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body class="bg-light-color">
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/logoImg/logo.png}" alt="logo" width="200px">
+        </a>
+
+        <div class="collapse navbar-collapse justify-content-center">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/gallery}">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/shop}">Shop</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
+            </ul>
+        </div>
+
+        <a th:href="@{/shop}" class="btn btn-primary btn-sm rounded-pill px-4">
+            Continue Shopping
+        </a>
+    </div>
+</nav>
+<section class="checkout-section">
+    <div class="container">
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"/>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="checkout-card">
+                        <h4 class="checkout-header">Billing Details</h4>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" th:value="${user.username}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" th:value="${user.username}" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" th:value="${user.email}" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Street Address</label>
+                                <input type="text" class="form-control" placeholder="123 Art Street" required>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label">Country</label>
+                                <select class="form-select">
+                                    <option>Maharashtra</option>
+                                    <option>TamilNadu</option>
+                                    <option>Goa</option>
+                                    <option>MadhyaPradesh</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Zip</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-------------payment method section ----------------->
+                    <div class="checkout-card">
+                        <h4 class="checkout-header">Payment Method</h4>
+                        <div class="payment-option selected mb-3" onclick="selectPayment(this, 'card')">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="payCard" value="CARD" checked>
+                                <label class="form-check-label fw-bold" for="payCard">Credit / Debit Card</label>
+                            </div>
+                            <div class="mt-3 row g-3" id="card-details">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" placeholder="Card Number">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="MM / YY">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="CVV">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="payment-option" onclick="selectPayment(this, 'paypal')">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="payPaypal" value="PAYPAL">
+                                <label class="form-check-label fw-bold" for="payPaypal">
+                                    PayPal <i class="bi bi-paypal text-primary ms-2"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="payment-option" onclick="selectPayment(this, 'cod')">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="payCod" value="COD">
+                                <label class="form-check-label fw-bold" for="payCod">
+                                    Cash On Delivery
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-------------artwork display section ----------------->
+                <div class="col-lg-4">
+                    <div class="checkout-card position-sticky" style="top: 100px;">
+                        <h4 class="checkout-header">Order Summary</h4>
+                        <div id="checkoutItems" class="mb-4"></div>
+
+<!--                        <div class="mb-4">-->
+<!--                            <div class="order-item">-->
+<!--                                <img th:src="@{https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?w=100}" class="order-thumb" alt="Art">-->
+<!--                                <div>-->
+<!--                                    <h6 class="mb-0 font-playfair">Abstract Harmony</h6>-->
+<!--                                    <small class="text-muted">Oil on Canvas</small>-->
+<!--                                    <div class="fw-bold mt-1">₹1,200</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="order-item">-->
+<!--                                <img th:src="@{https://plus.unsplash.com/premium_photo-1664013263421-91e3a8101259?w=100}" class="order-thumb" alt="Art">-->
+<!--                                <div>-->
+<!--                                    <h6 class="mb-0 font-playfair">Urban Dreams</h6>-->
+<!--                                    <small class="text-muted">Acrylic Print</small>-->
+<!--                                    <div class="fw-bold mt-1">₹1,100</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div class="border-top pt-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Subtotal</span>
+                                <span id="checkoutSubtotal">₹2,300</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Shipping</span>
+                                <span id="checkoutShipping">₹50</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                <span class="fs-5 fw-bold font-playfair">Total</span>
+                                <span class="fs-4 fw-bold text-primary" id="checkoutTotal">₹2,350</span>
+                            </div>
+                        </div>
+
+                        <button type="button"  id="placeOrderBtn" class="btn btn-primary w-100 rounded-pill mt-4 py-3 text-uppercase fw-bold" style="letter-spacing: 1px;">
+                            Place Order
+                        </button>
+
+                        <div class="text-center mt-3">
+                            <small class="text-muted"><i class="bi bi-shield-lock-fill me-1"></i> Secure Checkout</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+</section>
+
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 text-center p-4">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                </div>
+                <h3 class="font-playfair fw-bold mb-3">Order Placed!</h3>
+                <p class="text-muted mb-4">Thank you for your purchase. Your artwork will be shipped soon. Check your email for the receipt.</p>
+                <a th:href="index.html" class="btn btn-primary rounded-pill px-5">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+     const cart = JSON.parse(localStorage.getItem("artCart")) || {};
+     const itemsContainer = document.getElementById("checkoutItems");
+     console.log("we are in checkout function logoic");
+     console.log(cart);
+
+
+     let subtotal = 0;
+
+     Object.values(cart).forEach(item => {
+         subtotal += item.price * item.quantity;
+
+         const div = document.createElement("div");
+         div.className = "order-item";
+
+         div.innerHTML = `
+             <img src="${item.image}" class="order-thumb" alt="Art">
+             <div>
+                 <h6 class="mb-0 font-playfair">${item.name}</h6>
+                 <small class="text-muted">${item.type}</small>
+                 <div class="fw-bold mt-1">₹${item.price}</div>
+             </div>
+         `;
+
+         itemsContainer.appendChild(div);
+     });
+
+     const shipping = 50;
+     const total = subtotal + shipping;
+
+     document.getElementById("checkoutSubtotal").textContent = `₹${subtotal}`;
+     document.getElementById("checkoutTotal").textContent = `₹${total}`;
+
+
+      const btn = document.getElementById("placeOrderBtn");
+    if (!btn) return;
+
+    btn.addEventListener("click", () => {
+        console.log("we are in click function to run palce order functioanlity");
+        const csrfToken = document.querySelector('input[name="_csrf"]').value;
+        const csrfHeader = "X-CSRF-TOKEN";
+
+        const cart = JSON.parse(localStorage.getItem("artCart")) || {};
+
+        const items = Object.entries(cart).map(([id, item]) => ({
+            artworkId: id,
+            quantity: item.quantity
+        }));
+
+        const paymentMethod =
+            document.querySelector('input[name="paymentMethod"]:checked').value;
+
+        fetch("/checkout/place-order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify({
+                items: items,
+                paymentMethod: paymentMethod
+            })
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Server error: " + res.status);
+            }
+            return res.json();
+        })
+        .then(data => {
+            // Backend returns { redirectUrl: "/checkout/order-success/ORD-..." }
+            localStorage.removeItem("artCart");
+            window.location.href = data.redirectUrl;
+        })
+        .catch(err => {
+            console.error("Order failed:", err);
+            btn.disabled = false;
+            btn.textContent = "Place Order";
+            alert("Order failed. Please try again.");
+        });
+    });
+
+ });
+
+    function selectPayment(element, method) {
+    // remove selected class from all options
+    document.querySelectorAll(".payment-option").forEach(opt => {
+        opt.classList.remove("selected");
+    });
+
+    // add selected class to clicked option
+    element.classList.add("selected");
+
+    // check the radio button inside clicked option
+    element.querySelector("input[type='radio']").checked = true;
+
+    // show / hide card details
+    const cardDetails = document.getElementById("card-details");
+    if (method === "card") {
+        cardDetails.style.display = "flex";
+    } else {
+        cardDetails.style.display = "none";
+    }
+}
+</script>
+<!--<script th:src="@{/js/main.js}"></script>-->
+<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

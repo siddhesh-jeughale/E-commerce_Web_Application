@@ -1,0 +1,96 @@
+
+/* =========================================
+   14. RESPONSIVE MEDIA QUERIES
+   ========================================= */
+@media (max-width: 991px) {
+    /* .carousel-caption-custom h1 { font-size: 3rem; } */
+    .Featured-Artworks { padding: 60px 0; }
+
+    /* Mobile Navbar Styling */
+    /* .navbar-collapse {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 15px;
+        box-shadow: var(--shadow-lg);
+    } */
+     .navbar {
+        width: 95%; /* Wider on mobile */
+        margin-top: 15px;
+        border-radius: 20px; /* Less rounded corners on mobile */
+        padding: 1rem;
+    }
+    .navbar-collapse {
+        margin-top: 15px;
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .nav-link {
+        margin: 5px 0;
+        border-radius: 10px;
+    }
+    /* Ensure Hero takes up space but allows content to breathe */
+    .hero-carousel {
+        height: auto; /* Allow it to grow if needed */
+        min-height: 100vh; /* Minimum full screen */
+        padding-bottom: 50px; /* Space at bottom */
+    }
+
+    .hero-carousel .carousel-item {
+        height: 100vh; /* Fallback */
+        min-height: 700px; /* FORCE a tall height so text doesn't bleed out */
+        background-position: center;
+    }
+
+    /*  Adjust Caption Positioning for Mobile */
+    .carousel-caption-custom {
+        top: 40%; /* Move slightly down to clear the logo */
+        transform: translate(-50%, -50%);
+        width: 90%; /* Wider text area */
+        padding: 0 15px;
+    }
+
+    .carousel-caption-custom h1 {
+        font-size: 2.2rem; /* Smaller font to fit screen */
+        margin-bottom: 1rem;
+    }
+
+    .carousel-caption-custom p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /*  Push the About Section Down */
+    #about {
+        margin-top: 0; /* Reset */
+        padding-top: 80px; /* Add internal padding instead */
+        position: relative;
+        z-index: 10; /* Ensure it sits on its own layer */
+        background-color: var(--light-color); /* Ensure solid background */
+    }
+    /* Feature boxes simpler on tablet */
+    .feature-box { padding: 1.5rem; }
+}
+
+@media (max-width: 768px) {
+    /* body { padding-top: 60px; } */
+    .hero-carousel, .carousel-item { height: 70vh; min-height: 500px; }
+    .carousel-caption-custom h1 { font-size: 2.5rem; }
+    .display-3 { font-size: 2.5rem; }
+
+    /* Ensure cards look good on mobile */
+    .art-card-img-container { padding-top: 75%; }
+    .stats-counter .col-6 { margin-bottom: 30px; }
+
+    /* Map & Form stacking */
+    .map-wrapper { height: 250px; }
+}
+
+@media (max-width: 576px) {
+    .carousel-caption-custom h1 { font-size: 2rem; }
+    .btn { padding: 10px 20px; font-size: 0.75rem; }
+    .stat-number { font-size: 2.5rem; }
+    .section-title { font-size: 2rem; }
+}

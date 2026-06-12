@@ -1,0 +1,163 @@
+  /* Import Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap');
+
+  /* Color Variables (Local to this file) */
+  :root {
+      /* Color Palette */
+      --primary-color: #4a4e69;
+      --secondary-color: #9a8c98;
+      --accent-color: #c9ada7;
+      --light-color: #f8f5f2; /* Warm off-white */
+      --dark-color: #22223b;
+      --success-color: #28a745;
+      --danger-color: #dc3545;
+      --text-muted: #6c757d;
+
+      /* Effects */
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+      --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, .font-playfair {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--dark-color);
+      letter-spacing: -0.5px;
+  }
+
+  h2.section-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+  }
+
+  .lead {
+      font-weight: 300;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+  }
+
+  /* =========================================
+     3. BUTTONS & UI ELEMENTS
+     ========================================= */
+  .btn {
+      border-radius: 50px;
+      padding: 12px 30px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: var(--transition);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+  }
+
+  .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      box-shadow: 0 4px 15px rgba(74, 78, 105, 0.3);
+  }
+
+  .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+      background-color: var(--dark-color);
+      border-color: var(--dark-color);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(74, 78, 105, 0.4);
+  }
+
+  .btn-outline-light {
+      border-width: 2px;
+  }
+
+  .btn-outline-light:hover {
+      background-color: #fff;
+      color: var(--dark-color);
+      transform: translateY(-2px);
+  }
+
+  .bg-light-color {
+      background-color: var(--light-color) !important;
+  }
+
+
+  body {
+            background-color: #e9ecef; /* Slightly darker than main site for contrast */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .admin-auth-card {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+            border-top: 5px solid var(--primary-color); /* Brand accent on top */
+        }
+
+        .admin-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .form-control {
+            border-radius: 50px;
+            padding: 12px 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #e2e6ea;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus {
+            background-color: #fff;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(74, 78, 105, 0.1);
+        }
+
+        .btn-admin {
+            width: 100%;
+            padding: 12px;
+            border-radius: 50px;
+            background-color: var(--dark-color);
+            color: white;
+            font-weight: 600;
+            border: none;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-admin:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: #6c757d;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .back-link:hover { color: var(--primary-color); }

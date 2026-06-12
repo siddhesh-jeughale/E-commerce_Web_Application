@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Orders</title>
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css}"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css}"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/logoImg/logo.png}" alt="logo" class="img-fluid" width="200px">
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/gallery}">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/shop}">Shop</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="d-lg-flex align-items-center" sec:authorize="!isAuthenticated()">
+            <!--                <a th:href="@{/login}" class="btn btn-primary btn-sm rounded-pill px-4">-->
+            <!--                    <i class="fa-solid fa-circle-user"></i>-->
+            <!--                </a>-->
+            <div class="dropdown">
+                <a href="#" class="user-profile d-flex align-items-center text-decoration-none dropdown-toggle no-arrow  rounded-pill"
+                   data-bs-toggle="dropdown">
+                    <i class="fa-regular fa-circle-user" style="font-size:30px; color:#22223b;"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-4 p-2 mt-3 animate-slide">
+
+                    <li>
+                        <a class="dropdown-item rounded-pill" th:href="@{/orders}">
+                            <i class="bi bi-box-seam"></i> My Orders
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a class="dropdown-item rounded-pill " th:href="@{/favourites}">
+                            <i class="bi bi-heart"></i> My Favourites
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider my-2">
+                    </li>
+
+                    <li>
+                        <form th:action="@{/login}" method="post" class="m-0">
+                            <button type="submit" class="dropdown-item rounded-pill text-info fw-bold">
+                                <i class="bi bi-box-arrow-right"></i> Login
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center" sec:authorize="isAuthenticated()">
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle no-arrow"
+                   data-bs-toggle="dropdown">
+                    <img th:src="@{/logoImg/user.jpg}"
+                         class="rounded-circle border shadow-sm" width="40" height="40" style="object-fit: cover;">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-4 p-2 mt-3 animate-slide">
+
+                    <li>
+                        <a class="dropdown-item rounded-pill" th:href="@{/orders}">
+                            <i class="bi bi-box-seam"></i> My Orders
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a class="dropdown-item rounded-pill " th:href="@{/favourites}">
+                            <i class="bi bi-heart"></i> My Favourites
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider my-2">
+                    </li>
+
+                    <li>
+                        <form th:action="@{/logout}" method="post" class="m-0">
+                            <button type="submit" class="dropdown-item rounded-pill text-danger fw-bold">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="page-wrapper">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="bg-white p-4 rounded-4 shadow-sm h-100 border">
+                    <h3 class="font-playfair fw-bold mb-4">My Favourites</h3>
+
+<!--                    <div class="row g-4">-->
+<!--                        <div class="col-md-6 col-xl-4">-->
+<!--                            <div class="card fav-card h-100">-->
+<!--                                <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500"-->
+<!--                                     class="fav-card-img" alt="Art">-->
+<!--                                <div class="card-body">-->
+<!--                                    <h5 class="fw-bold font-playfair mb-1">Mountain Serenity</h5>-->
+<!--                                    <p class="text-primary fw-bold mb-3">₹850</p>-->
+<!--                                    <div class="d-grid gap-2">-->
+<!--                                        <button class="btn btn-primary rounded-pill btn-sm">Add to Cart</button>-->
+<!--                                        <button class="btn btn-outline-danger rounded-pill btn-sm">Remove</button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="col-md-6 col-xl-4">-->
+<!--                            <div class="card fav-card h-100">-->
+<!--                                <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=500"-->
+<!--                                     class="fav-card-img" alt="Art">-->
+<!--                                <div class="card-body">-->
+<!--                                    <h5 class="fw-bold font-playfair mb-1">Abstract Harmony</h5>-->
+<!--                                    <p class="text-primary fw-bold mb-3">₹1,200</p>-->
+<!--                                    <div class="d-grid gap-2">-->
+<!--                                        <button class="btn btn-primary rounded-pill btn-sm">Add to Cart</button>-->
+<!--                                        <button class="btn btn-outline-danger rounded-pill btn-sm">Remove</button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script src="https://kit.fontawesome.com/6d7cc8e536.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

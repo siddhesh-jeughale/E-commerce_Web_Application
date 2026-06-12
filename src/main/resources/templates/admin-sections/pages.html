@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div id="pages-tab" class="tab-content  fade-in">
+
+    <ul class="nav nav-pills cms-pill-nav mb-4" id="pills-tab" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#cms-home">Home</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#cms-about">About</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#cms-gallery">Gallery</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#cms-shop">Shop</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#cms-contact">Contact</button></li>
+    </ul>
+
+    <div class="tab-content" id="pills-tabContent">
+
+        <div class="tab-pane fade show active" id="cms-home">
+
+            <div class="page-edit-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h5 class=" modal-title mb-0 font-playfair">Hero Carousel Slides</h5>
+                    <button class="btn btn-sm btn-primary rounded-pill" 
+                            data-add="/admin/pages/home/hero/add" 
+                            data-modal="#modalHeroSlide" 
+                            data-title="Add Hero Slide" 
+                            onclick="openAdd(this)">
+                        <i class="bi bi-plus-lg me-1"></i> Add Slide
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle admin-datatable w-100">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Image</th>
+                            <th>Heading</th>
+                            <th>Subtext</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="hero :${heroList}">
+                            <td>
+                                <img th:src="@{'/images/'+${hero.imageUrl}}" class="admin-thumb">
+                            </td>
+                            <td th:text="${hero.heading}">Emotions on Canvas</td>
+                            <td>
+                                <small class="text-muted" th:text="${hero.subtext}">Discover a world of vibrant abstract...</small>
+                            </td>
+                            <td class="text-end">
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+                                <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                        th:data-id="${hero.id}"
+                                        data-fetch="/admin/pages/home/hero/edit"
+                                        data-update="/admin/pages/home/hero/update"
+                                        data-modal="#modalHeroSlide"
+                                        data-title="Edit Hero Slide"
+                                        onclick="openEdit(this)">
+                                    <i class="bi bi-pencil text-primary"></i>
+                                </button>
+                                <form th:action="@{/admin/pages/home/hero/delete/{id}(id=${hero.id})}"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light rounded-circle"
+                                            onclick="return confirm('Are you sure you want to delete?')">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td><img src="https://images.unsplash.com/photo-1758521233238-4cf82e9a9c1e?w=100" class="admin-thumb"></td>-->
+<!--                            <td>Emotions on Canvas</td>-->
+<!--                            <td><small class="text-muted">Discover a world of vibrant abstract...</small></td>-->
+<!--                            <td class="text-end">-->
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td><img src="https://images.unsplash.com/photo-1677064730827-d8bbf7d1ceed?w=100" class="admin-thumb"></td>-->
+<!--                            <td>Nature Reimagined</td>-->
+<!--                            <td><small class="text-muted">Oil paintings that capture...</small></td>-->
+<!--                            <td class="text-end">-->
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+<!--&lt;!&ndash;                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>&ndash;&gt;-->
+<!--                                <form th:action="@{/admin/pages/home/hero/delete/{id}(id=${hero.id})}"-->
+<!--                                      method="post"-->
+<!--                                      style="display:inline">-->
+
+<!--                                    <button type="submit"-->
+<!--                                            class="btn btn-sm btn-light rounded-circle"-->
+<!--                                            onclick="return confirm('Are you sure you want to delete?')">-->
+<!--                                        <i class="bi bi-trash text-danger"></i>-->
+<!--                                    </button>-->
+
+<!--                                </form>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="page-edit-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h5 class="mb-0 font-playfair">Testimonials</h5>
+                    <button class="btn btn-sm btn-primary rounded-pill"
+                            data-add="/admin/pages/home/testimonial/add"
+                            data-modal="#modalTestimonial"
+                            data-title="Add Testimonial"
+                            onclick="openAdd(this)">
+                        <i class="bi bi-plus-lg me-1"></i> Add Testimonial
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle admin-datatable w-100">
+                        <thead class="table-light">
+                        <tr>
+                            <th >Image</th>
+                            <th >Client</th>
+                            <th width="55%">Quote</th>
+                            <th class="text-end" width="20%">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="testimonial:${testimonials}">
+                            <td>
+                                <img th:src="@{'/images/'+${testimonial.imageUrl}}" class="admin-thumb">
+                            </td>
+                            <td>
+                                <span th:text="${testimonial.clientName}">Sarah Johnson</span><br>
+                                <small class="text-muted" th:text="${testimonial.role} +', '+ ${testimonial.location} ">Collector, NY</small>
+                            </td>
+                            <td th:text="${testimonial.quote}">"Alex's artwork transformed..."</td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                        th:data-id="${testimonial.id}"
+                                        data-fetch="/admin/pages/home/testimonial/edit"
+                                        data-update="/admin/pages/home/testimonial/update"
+                                        data-modal="#modalTestimonial"
+                                        data-title="Edit Testimonial"
+                                        onclick="openEdit(this)">
+                                    <i class="bi bi-pencil text-primary"></i>
+                                </button>
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+                                <form th:action="@{/admin/pages/home/testimonial/delete/{id}(id=${testimonial.id})}"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light rounded-circle"
+                                            onclick="return confirm('Are you sure you want to delete?')">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="cms-about">
+            <div class="page-edit-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h5 class=" Model-title mb-0 font-playfair">Page Header</h5>
+<!--                    <button class="btn btn-sm btn-primary rounded-pill"-->
+<!--                            data-bs-toggle="modal"-->
+<!--                            data-bs-target="#HeadersModal">-->
+<!--                        <i class="bi bi-plus-lg me-1"></i> Add Header-->
+<!--                    </button>-->
+                    <button class="btn btn-sm btn-primary rounded-pill"
+                            data-add="/admin/pages/about/header/add"
+                            data-modal="#HeadersModal"
+                            data-title="Add About Header"
+                            onclick="openAdd(this)">
+                        <i class="bi bi-plus-lg me-1"></i> Add Header
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle admin-datatable w-100">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Image</th>
+                            <th>Heading</th>
+                            <th>Subtext</th>
+                            <th class="text-end">Actions</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pageHeader:${pageHeaders}">
+                            <td>
+                                <img th:src="@{'/images/'+${pageHeader.imageUrl}}" class="admin-thumb">
+                            </td>
+                            <td th:text="${pageHeader.title}">About the Artist</td>
+                            <td th:text="${pageHeader.subtext}">Milestones in my journey</td>
+                            <td class="text-end">
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+                                <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                        th:data-id="${pageHeader.id}"
+                                        data-fetch="/admin/pages/about/header/edit"
+                                        data-update="/admin/pages/about/header/update"
+                                        data-modal="#HeadersModal"
+                                        data-title="Edit Page Header"
+                                        onclick="openEdit(this)">
+                                    <i class="bi bi-pencil text-primary"></i>
+                                </button>
+                                <form th:action="@{/admin/pages/about/header/delete/{id}(id=${pageHeader.id})}"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light rounded-circle"
+                                            onclick="return confirm('Are you sure you want to delete?')">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="page-edit-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h5 class="mb-0 font-playfair">Awards & Recognition</h5>
+                    <button class="btn btn-sm btn-primary rounded-pill"
+                            data-add="/admin/pages/about/awards/add"
+                            data-modal="#modalAward"
+                            data-title="Add Award"
+                            onclick="openAdd(this)"><i class="bi bi-plus-lg me-1"></i> Add Award</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle admin-datatable w-100">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Image</th>
+                            <th>Award Title</th>
+                            <th>Subtitle</th>
+                            <th class="text-end">Actions</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="award :${awards}">
+                            <td><img th:src="@{'/images/'+${award.imageUrl}}" class="admin-thumb"></td>
+                            <td th:text="${award.title}">International Art Excellence</td>
+                            <td th:text="${award.subtitle} + ' • ' + ${award.createdDate.year}">First Prize • 2023</td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                        th:data-id="${award.id}"
+                                        data-fetch="/admin/pages/about/awards/edit"
+                                        data-update="/admin/pages/about/awards/update"
+                                        data-modal="#modalAward"
+                                        data-title="Edit Awards"
+                                        onclick="openEdit(this)">
+                                    <i class="bi bi-pencil text-primary"></i>
+                                </button>
+                                <!--  <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+                                <!--  <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+                                <form th:action="@{/admin/pages/about/awards/delete/{id}(id=${award.id})}"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light rounded-circle"
+                                            onclick="return confirm('Are you sure you want to delete?')">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="cms-gallery">
+            <div class="page-edit-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h5 class=" Model-title mb-0 font-playfair">Page Header</h5>
+<!--                    <button class="btn btn-sm btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#HeadersModal"><i class="bi bi-plus-lg me-1"></i> Add Header</button>-->
+                    <button class="btn btn-sm btn-primary rounded-pill"
+                            data-add="/admin/pages/gallery/header/add"
+                            data-modal="#HeadersModal"
+                            data-title="Add Gallery Header"
+                            onclick="openAdd(this)">
+                        <i class="bi bi-plus-lg me-1"></i> Add Header
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle admin-datatable w-100">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Image</th>
+                            <th>Heading</th>
+                            <th>Subtext</th>
+                            <th class="text-end">Actions</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="galleryHeader:${galleryHeaders}">
+                            <td>
+                                <img th:src="@{'/images/'+${galleryHeader.imageUrl}}" class="admin-thumb">
+                            </td>
+                            <td th:text="${galleryHeader.title}">About the Artist</td>
+                            <td th:text="${galleryHeader.subtext}">Milestones in my journey</td>
+                            <td class="text-end">
+                                <!--  <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+                                <!--  <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+                                <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                        th:data-id="${galleryHeader.id}"
+                                        data-fetch="/admin/pages/gallery/header/edit"
+                                        data-update="/admin/pages/gallery/header/update"
+                                        data-modal="#HeadersModal"
+                                        data-title="Edit Page Header"
+                                        onclick="openEdit(this)">
+                                    <i class="bi bi-pencil text-primary"></i>
+                                </button>
+                                <form th:action="@{/admin/pages/gallery/header/delete/{id}(id=${galleryHeader.id})}"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light rounded-circle"
+                                            onclick="return confirm('Are you sure you want to delete?')">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="page-edit-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h5 class="mb-0 font-playfair">Studio Insights</h5>
+                    <button class="btn btn-sm btn-primary rounded-pill"
+                            data-add="/admin/pages/gallery/studio/add"
+                            data-modal="#modalStudio"
+                            data-title="Add Studio Insight"
+                            onclick="openAdd(this)"><i class="bi bi-plus-lg me-1"></i> ADD INSIGHTS</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle admin-datatable w-100">
+                        <thead class="table-light">
+                        <tr>
+                            <th width="20%">Video URL</th>
+                            <th width="20%">Title</th>
+                            <th width="40%">Description</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="studio:${studios}" >
+                            <td th:text="${studio.videoURL}" class="fw-bold">URL</td>
+                            <td th:text="${studio.title}" >Title</td>
+                            <td th:text="${studio.description}"class="text-muted">Description</td>
+                            <td class="text-end">
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+                                <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                        th:data-id="${studio.id}"
+                                        data-fetch="/admin/pages/gallery/studio/edit"
+                                        data-update="/admin/pages/gallery/studio/update"
+                                        data-modal="#modalStudio"
+                                        data-title="Edit Studio"
+                                        onclick="openEdit(this)">
+                                    <i class="bi bi-pencil text-primary"></i>
+                                </button>
+                                <form th:action="@{/admin/pages/gallery/studio/delete/{id}(id=${studio.id})}"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light rounded-circle"
+                                            onclick="return confirm('Are you sure you want to delete?')">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="cms-shop">
+            <div class="page-edit-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h5 class=" Model-title mb-0 font-playfair">Page Header</h5>
+<!--                    <button class="btn btn-sm btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#HeadersModal"><i class="bi bi-plus-lg me-1"></i> Add Header</button>-->
+                    <button class="btn btn-sm btn-primary rounded-pill"
+                            data-add="/admin/pages/shop/header/add"
+                            data-modal="#HeadersModal"
+                            data-title="Add Shop Header"
+                            onclick="openAdd(this)">
+                        <i class="bi bi-plus-lg me-1"></i> Add Header
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle admin-datatable w-100">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Image</th>
+                            <th>Heading</th>
+                            <th>Subtext</th>
+                            <th class="text-end">Actions</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="shopHeader:${shopHeaders}">
+                            <td>
+                                <img th:src="@{'/images/'+${shopHeader.imageUrl}}" class="admin-thumb">
+                            </td>
+                            <td th:text="${shopHeader.title}">About the Artist</td>
+                            <td th:text="${shopHeader.subtext}">Milestones in my journey</td>
+                            <td class="text-end">
+                                <!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+                                <!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+                                <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                        th:data-id="${shopHeader.id}"
+                                        data-fetch="/admin/pages/shop/header/edit"
+                                        data-update="/admin/pages/shop/header/update"
+                                        data-modal="#HeadersModal"
+                                        data-title="Edit Page Header"
+                                        onclick="openEdit(this)">
+                                    <i class="bi bi-pencil text-primary"></i>
+                                </button>
+                                <form th:action="@{/admin/pages/shop/header/delete/{id}(id=${shopHeader.id})}"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light rounded-circle"
+                                            onclick="return confirm('Are you sure you want to delete?')">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="page-edit-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h5 class="mb-0 font-playfair">Upcoming Exhibitions</h5>
+                    <button class="btn btn-sm btn-primary rounded-pill"
+                            data-add="/admin/pages/shop/exhibition/add"
+                            data-modal="#modalExhibition"
+                            data-title="Add Exhibition"
+                            onclick="openAdd(this)"><i class="bi bi-plus-lg me-1"></i> Add Exhibition</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle admin-datatable w-100">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Image</th>
+                            <th>Badge Date</th>
+                            <th>Event Name</th>
+                            <th>Location</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="exhibition :${exhibitions}">
+                            <td><img th:src="@{'/images/'+${exhibition.imageUrl}}" class="admin-thumb"></td>
+                            <td><span class="badge bg-success" th:text="${exhibition.yearBadge}">March 2024</span></td>
+<!--                            <td th:text="${exhibition.title}">"Urban Rhythms"<br>-->
+<!--                                <small class="text-primary" th:text="${exhibition.type}">Solo Exhibition</small>-->
+<!--                            </td>-->
+                            <td>
+                                <span th:text="${exhibition.title}"></span><br>
+                                <small class="text-primary" th:text="${exhibition.type}"></small>
+                            </td>
+                            <td th:text="${exhibition.location}">Metropolitan Art Gallery, NYC</td>
+                            <td class="text-end">
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+                                <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                        th:data-id="${exhibition.id}"
+                                        data-fetch="/admin/pages/shop/exhibition/edit"
+                                        data-update="/admin/pages/shop/exhibition/update"
+                                        data-modal="#modalExhibition"
+                                        data-title="Edit Exhibition"
+                                        onclick="openEdit(this)">
+                                    <i class="bi bi-pencil text-primary"></i>
+                                </button>
+                                <form th:action="@{/admin/pages/shop/exhibition/delete/{id}(id=${exhibition.id})}"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light rounded-circle"
+                                            onclick="return confirm('Are you sure you want to delete?')">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="cms-contact">
+            <div class="page-edit-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h5 class=" Model-title mb-0 font-playfair">Page Header</h5>
+<!--                    <button class="btn btn-sm btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#HeadersModal"><i class="bi bi-plus-lg me-1"></i> Add Header</button>-->
+                    <button class="btn btn-sm btn-primary rounded-pill"
+                            data-add="/admin/pages/contact/header/add"
+                            data-modal="#HeadersModal"
+                            data-title="Add Contact Header"
+                            onclick="openAdd(this)">
+                        <i class="bi bi-plus-lg me-1"></i> Add Header
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle admin-datatable w-100">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Image</th>
+                            <th>Heading</th>
+                            <th>Subtext</th>
+                            <th class="text-end">Actions</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="contactHeader:${contactHeaders}">
+                            <td>
+                                <img th:src="@{'/images/'+${contactHeader.imageUrl}}" class="admin-thumb">
+                            </td>
+                            <td th:text="${contactHeader.title}">About the Artist</td>
+                            <td th:text="${contactHeader.subtext}">Milestones in my journey</td>
+                            <td class="text-end">
+                                <!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+                                <!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+                                <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                        th:data-id="${contactHeader.id}"
+                                        data-fetch="/admin/pages/contact/header/edit"
+                                        data-update="/admin/pages/contact/header/update"
+                                        data-modal="#HeadersModal"
+                                        data-title="Edit Page Header"
+                                        onclick="openEdit(this)">
+                                    <i class="bi bi-pencil text-primary"></i>
+                                </button>
+                                <form th:action="@{/admin/pages/contact/header/delete/{id}(id=${contactHeader.id})}"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light rounded-circle"
+                                            onclick="return confirm('Are you sure you want to delete?')">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="page-edit-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                    <h5 class="mb-0 font-playfair">Common Questions</h5>
+                    <button class="btn btn-sm btn-primary rounded-pill"
+                            data-add="/admin/pages/contact/FAQ/add"
+                            data-modal="#modalFAQ"
+                            data-title="Add FAQ"
+                            onclick="openAdd(this)"><i class="bi bi-plus-lg me-1"></i> Add Question</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle admin-datatable w-100">
+                        <thead class="table-light">
+                        <tr>
+                            <th width="30%">Question</th>
+                            <th>Answer</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="faq:${FAQs}">
+                            <td th:text="${faq.question}"  class="fw-bold">Do you do commissions?</td>
+                            <td th:text="${faq.answer}" class="text-muted">Yes, I accept a limited number...</td>
+                            <td class="text-end">
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-pencil text-primary"></i></button>-->
+<!--                                <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-trash text-danger"></i></button>-->
+                                <button class="btn btn-sm btn-light rounded-circle edit-btn"
+                                        th:data-id="${faq.id}"
+                                        data-fetch="/admin/pages/contact/FAQ/edit"
+                                        data-update="/admin/pages/contact/FAQ/update"
+                                        data-modal="#modalFAQ"
+                                        data-title="Edit FAQ"
+                                        onclick="openEdit(this)">
+                                    <i class="bi bi-pencil text-primary"></i>
+                                </button>
+                                <form th:action="@{/admin/pages/contact/FAQ/delete/{id}(id=${faq.id})}"
+                                      method="post"
+                                      style="display:inline">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light rounded-circle"
+                                            onclick="return confirm('Are you sure you want to delete?')">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
