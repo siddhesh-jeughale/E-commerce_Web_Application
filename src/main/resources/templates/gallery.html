@@ -127,7 +127,7 @@
         th:each="header:${headers}"
         th:style="'background-image:
          linear-gradient(rgba(34, 34, 59, 0.6), rgba(34, 34, 59, 0.6)),
-        url(/images/' + ${header.imageUrl} + ')'">
+        url(${header.imageUrl})'">
     <div class="container">
         <h1 class="display-3 fw-bold text-white mb-3" th:text="${header.title}">Selected Works</h1>
         <p class="lead text-white-50 fs-4" th:text="${header.subtext}">A curated collection of paintings across styles and mediums</p>
@@ -168,7 +168,7 @@
                 <div class="art-card">
                     <div class="art-card-img-container">
                         <span th:text="${artwork.medium}"  class="art-card-badge">Oil</span>
-                        <img th:src="@{'/images/'+${artwork.imgUrl}}"
+                        <img th:src="${artwork.imgUrl}"
                              th:alt="${artwork.title}"
                                 class="img-fluid">
                     </div>

@@ -23,21 +23,24 @@ public class HomeHeroService {
 
     @Autowired
     private HomeHeroRepo homeHeroRepo;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     public void SaveChanges (HomeHero homeHero, MultipartFile imageFile) throws IOException {
         System.out.println("service homme hero heading: " + homeHero.getHeading());
         System.out.println("service homme hero subtext: " + homeHero.getSubtext());
         if (imageFile != null) System.out.println("service homme hero image: " + imageFile.getOriginalFilename());
         if (imageFile != null && !imageFile.isEmpty()){
-//            String  fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)){
-                Files.createDirectories(uploadPath);
-            }
-            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
-                        StandardCopyOption.REPLACE_EXISTING);
-               homeHero.setImageUrl(fileName);
+////            String  fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+//            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
+//            Path uploadPath = Paths.get(uploadDir);
+//            if (!Files.exists(uploadPath)){
+//                Files.createDirectories(uploadPath);
+//            }
+//            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
+//                        StandardCopyOption.REPLACE_EXISTING);
+            String imageUrl = cloudinaryService.uploadImage(imageFile);
+               homeHero.setImageUrl(imageUrl);
 
         }
         homeHeroRepo.save(homeHero);
@@ -66,21 +69,22 @@ public class HomeHeroService {
         System.out.println("new update image:" +  homeHero.getSubtext());
 
         if (imageFile != null && !imageFile.isEmpty()) {
-            String oldImgUrl = existing.getImageUrl();
-            if (oldImgUrl != null && !oldImgUrl.isBlank()) {
-//                String oldFileName = oldImgUrl.replace("/images/", "");
-                Path oldPath = Paths.get(uploadDir).resolve(oldImgUrl);
-                Files.deleteIfExists(oldPath);
-            }
-
-//            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-//            String fileName = imageFile.getOriginalFilename();
-            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
-            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-            existing.setImageUrl(fileName);
+//            String oldImgUrl = existing.getImageUrl();
+//            if (oldImgUrl != null && !oldImgUrl.isBlank()) {
+////                String oldFileName = oldImgUrl.replace("/images/", "");
+//                Path oldPath = Paths.get(uploadDir).resolve(oldImgUrl);
+//                Files.deleteIfExists(oldPath);
+//            }
+//
+////            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+////            String fileName = imageFile.getOriginalFilename();
+//            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
+//            Path uploadPath = Paths.get(uploadDir);
+//            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+//            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
+//                    StandardCopyOption.REPLACE_EXISTING);
+            String imageUrl = cloudinaryService.uploadImage(imageFile);
+            existing.setImageUrl(imageUrl);
         }
 
 

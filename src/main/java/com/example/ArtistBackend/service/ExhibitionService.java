@@ -24,18 +24,21 @@ public class ExhibitionService {
 
     @Autowired
     private ExhibitionRepo exhibitionRepo;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     public Exhibition saveExhibition(Exhibition exhibition, MultipartFile imageFile) throws IOException {
         if (imageFile != null && !imageFile.isEmpty()) {
-//            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-            exhibition.setImageUrl(fileName);
+////            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+//            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
+//            Path uploadPath = Paths.get(uploadDir);
+//            if (!Files.exists(uploadPath)) {
+//                Files.createDirectories(uploadPath);
+//            }
+//            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
+//                    StandardCopyOption.REPLACE_EXISTING);
+            String imageUrl = cloudinaryService.uploadImage(imageFile);
+            exhibition.setImageUrl(imageUrl);
 
         }
         return exhibitionRepo.save(exhibition);
@@ -48,9 +51,11 @@ public class ExhibitionService {
     public void  deleteExhibitionById(Long id){
         exhibitionRepo.deleteById(id);
     }
+
     public List<Exhibition> findAllExhibition(){
         return exhibitionRepo.findAll();
     }
+
     public void updateExhibition(Exhibition exhibition, MultipartFile imageFile) throws IOException{
         Exhibition existing = exhibitionRepo.findById(exhibition.getId())
                 .orElseThrow(() ->new RuntimeException("Exhibition not found"));
@@ -60,21 +65,22 @@ public class ExhibitionService {
        existing.setLocation(exhibition.getLocation());
 
         if (imageFile != null && !imageFile.isEmpty()) {
-            String oldImgUrl = existing.getImageUrl();
-            if (oldImgUrl != null && !oldImgUrl.isBlank()) {
-//                String oldFileName = oldImgUrl.replace("/images/", "");
-                Path oldPath = Paths.get(uploadDir).resolve(oldImgUrl);
-                Files.deleteIfExists(oldPath);
-            }
-
-//            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-//            String fileName = imageFile.getOriginalFilename();
-            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
-            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-            existing.setImageUrl(fileName);
+//            String oldImgUrl = existing.getImageUrl();
+//            if (oldImgUrl != null && !oldImgUrl.isBlank()) {
+////                String oldFileName = oldImgUrl.replace("/images/", "");
+//                Path oldPath = Paths.get(uploadDir).resolve(oldImgUrl);
+//                Files.deleteIfExists(oldPath);
+//            }
+//
+////            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+////            String fileName = imageFile.getOriginalFilename();
+//            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
+//            Path uploadPath = Paths.get(uploadDir);
+//            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+//            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
+//                    StandardCopyOption.REPLACE_EXISTING);
+            String imageUrl = cloudinaryService.uploadImage(imageFile);
+            existing.setImageUrl(imageUrl);
         }
         exhibitionRepo.save(existing);
     }

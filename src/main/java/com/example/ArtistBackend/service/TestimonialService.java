@@ -24,19 +24,22 @@ public class TestimonialService {
 
     @Autowired
     private TestimonialRepo testimonialRepo;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     public void saveTestimonial(Testimonial testimonial, MultipartFile imageFile) throws IOException {
         if (imageFile != null && !imageFile.isEmpty()){
-//            String  fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
-            Path uploadPath = Paths.get(uploadDir);
-            if(!Files.exists(uploadPath)){
-                Files.createDirectories(uploadPath);
-            }
-            Files.copy(imageFile.getInputStream(),
-                    uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-            testimonial.setImageUrl(fileName);
+////            String  fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+//            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
+//            Path uploadPath = Paths.get(uploadDir);
+//            if(!Files.exists(uploadPath)){
+//                Files.createDirectories(uploadPath);
+//            }
+//            Files.copy(imageFile.getInputStream(),
+//                    uploadPath.resolve(fileName),
+//                    StandardCopyOption.REPLACE_EXISTING);
+            String imageUrl = cloudinaryService.uploadImage(imageFile);
+            testimonial.setImageUrl(imageUrl);
         }
         testimonialRepo.save(testimonial);
     }
@@ -64,21 +67,22 @@ public class TestimonialService {
         existing.setQuote(testimonial.getQuote());
 
         if (imageFile != null && !imageFile.isEmpty()) {
-            String oldImgUrl = existing.getImageUrl();
-            if (oldImgUrl != null && !oldImgUrl.isBlank()) {
-//                String oldFileName = oldImgUrl.replace("/images/", "");
-                Path oldPath = Paths.get(uploadDir).resolve(oldImgUrl);
-                Files.deleteIfExists(oldPath);
-            }
-
-//            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-//            String fileName = imageFile.getOriginalFilename();
-            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
-            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-            existing.setImageUrl(fileName);
+//            String oldImgUrl = existing.getImageUrl();
+//            if (oldImgUrl != null && !oldImgUrl.isBlank()) {
+////                String oldFileName = oldImgUrl.replace("/images/", "");
+//                Path oldPath = Paths.get(uploadDir).resolve(oldImgUrl);
+//                Files.deleteIfExists(oldPath);
+//            }
+//
+////            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+////            String fileName = imageFile.getOriginalFilename();
+//            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
+//            Path uploadPath = Paths.get(uploadDir);
+//            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+//            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
+//                    StandardCopyOption.REPLACE_EXISTING);
+            String imageUrl = cloudinaryService.uploadImage(imageFile);
+            existing.setImageUrl(imageUrl);
         }
         return testimonialRepo.save(existing);
     }

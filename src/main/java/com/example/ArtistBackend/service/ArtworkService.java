@@ -27,19 +27,22 @@ public class ArtworkService {
 
     @Autowired
     private ArtworkRepo artworkRepo;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     public ArtWork saveArtwork(ArtWork artwork, MultipartFile imageFile) throws IOException {
 
         if (imageFile != null && !imageFile.isEmpty()) {
 //            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-            artwork.setImgUrl(fileName);
+//            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
+//            Path uploadPath = Paths.get(uploadDir);
+//            if (!Files.exists(uploadPath)) {
+//                Files.createDirectories(uploadPath);
+//            }
+//            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
+//                    StandardCopyOption.REPLACE_EXISTING);
+            String imageUrl = cloudinaryService.uploadImage(imageFile);
+            artwork.setImgUrl(imageUrl);
 
         }
         return artworkRepo.save(artwork);
@@ -71,22 +74,23 @@ public class ArtworkService {
 
         if (imageFile != null && !imageFile.isEmpty()) {
 
-//            1. Delete old image
-            String oldImgUrl = existing.getImgUrl();
-            if (oldImgUrl != null && !oldImgUrl.isBlank()) {
-//                String oldFileName = oldImgUrl.replace("/images/", "");
-                Path oldPath = Paths.get(uploadDir).resolve(oldImgUrl);
-                Files.deleteIfExists(oldPath);
-            }
-
-//            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-//            String fileName = imageFile.getOriginalFilename();
-            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
-            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-            existing.setImgUrl(fileName);
+////            1. Delete old image
+//            String oldImgUrl = existing.getImgUrl();
+//            if (oldImgUrl != null && !oldImgUrl.isBlank()) {
+////                String oldFileName = oldImgUrl.replace("/images/", "");
+//                Path oldPath = Paths.get(uploadDir).resolve(oldImgUrl);
+//                Files.deleteIfExists(oldPath);
+//            }
+//
+////            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+////            String fileName = imageFile.getOriginalFilename();
+//            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
+//            Path uploadPath = Paths.get(uploadDir);
+//            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+//            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
+//                    StandardCopyOption.REPLACE_EXISTING);
+            String imageUrl = cloudinaryService.uploadImage(imageFile);
+            existing.setImgUrl(imageUrl);
         }
 
         return artworkRepo.save(existing);

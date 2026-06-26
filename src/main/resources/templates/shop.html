@@ -126,7 +126,7 @@
         th:each="header:${headers}"
         th:style="'background-image:
          linear-gradient(rgba(34, 34, 59, 0.6), rgba(34, 34, 59, 0.6)),
-        url(/images/' + ${header.imageUrl} + ')'">
+        url(${header.imageUrl})'">
     <div class="container">
         <h1 class="display-3 fw-bold text-white mb-3" th:text="${header.title}">Collect Art</h1>
         <p class="lead text-white-50 fs-4" th:text="${header.subtext}">Original paintings and limited edition fine art prints</p>
@@ -167,7 +167,7 @@
                          th:if="${artwork.status != 'Sold'}">
                         <span class="art-card-badge" th:text="${artwork.category}">Original</span>
                         <button class="wishlist-btn" th:data-item="${artwork.id}"><i class="bi bi-heart"></i></button>
-                        <img th:src="@{'/images/'+${artwork.imgUrl}}" th:alt="${artwork.title}">
+                        <img th:src="${artwork.imgUrl}" th:alt="${artwork.title}">
 
                     </div>
                         <!--------------for sold product---------------->
@@ -177,7 +177,7 @@
                               th:text="${artwork.category}"
                               th:style="'background: var(--secondary-color); color: white;'">Original</span>
                         <button class="wishlist-btn" th:data-item="${artwork.id}"><i class="bi bi-heart"></i></button>
-                        <img th:src="@{'/images/'+${artwork.imgUrl}}" th:alt="${artwork.title}">
+                        <img th:src="${artwork.imgUrl}" th:alt="${artwork.title}">
 
                                                 <div class="sold-out-overlay">
                                                     <span class="sold-out-text">Sold Out</span>
@@ -373,7 +373,7 @@
                         <span class="art-card-badge"
                               style="background: #28a745; color: white;"
                               th:text="${exhibition.yearBadge}">March 2024</span>
-                        <img th:src="@{'/images/' + ${exhibition.imageUrl}}" alt="Exhibition 1">
+                        <img th:src="@{${exhibition.imageUrl}" alt="Exhibition 1">
                     </div>
                     <div class="art-overlay-info">
                         <h4 class="mb-2" th:text="${exhibition.title}">"Urban Rhythms"</h4>

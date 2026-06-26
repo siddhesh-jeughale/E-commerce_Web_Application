@@ -125,7 +125,7 @@
             <div class="carousel-item "
                  th:each="hero,stat :${heroLists}"
                  th:classappend="${stat.index == 0} ? ' active'"
-                 th:style="'background-image: url(/images/' + ${hero.imageUrl} + ')'">
+                 th:style="'background-image: url(${hero.imageUrl})'">
                 <div class="carousel-caption-custom">
                     <h1 th:text="${hero.heading}">Emotions on Canvas</h1>
                     <p th:text="${hero.subtext}">Discover a world of vibrant abstract expressionism and contemporary fine art.</p>
@@ -303,7 +303,7 @@
                                 <i class="bi bi-quote testimonial-quote-icon"></i>
                                 <p class="quote-text" th:text="${testimonial.quote}">"Alex's artwork transformed our living room. The colors and energy in her paintings bring life to our space every day. It's truly a masterpiece."</p>
                                 <div class="testimonial-author">
-                                    <img th:src="@{'/images/'+ ${testimonial.imageUrl}}" alt="Sarah Johnson">
+                                    <img th:src="${testimonial.imageUrl}" alt="Sarah Johnson">
                                     <div class="text-start">
                                         <h5 th:text="${testimonial.clientName}">Sarah Johnson</h5>
                                         <p class="text-muted small mb-0" th:text="${testimonial.role} + ' , '+ ${testimonial.location}">Art Collector, New York</p>

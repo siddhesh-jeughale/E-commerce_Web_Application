@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                     <tr th:each ="artwork : ${artworks}">
-                        <td><img th:src="@{'/images/'+${artwork.imgUrl}}" class="art-thumb"></td>
+                        <td><img th:src="${artwork.imgUrl}" class="art-thumb"></td>
                         <td class="fw-bold" th:text="${artwork.title}">Abstract Harmony</td>
                         <td th:text="${artwork.medium}">Oil on Canvas</td>
                         <td th:text="'₹' + ${artwork.price}">₹1,200</td>

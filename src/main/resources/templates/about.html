@@ -123,7 +123,10 @@
         th:each="header:${headers}"
         th:style="'background-image:
          linear-gradient(rgba(34, 34, 59, 0.6), rgba(34, 34, 59, 0.6)),
-        url(/images/' + ${header.imageUrl} + ')'">
+        url(${header.imageUrl})'">
+<!--        th:style="'background-image:-->
+<!--         linear-gradient(rgba(34, 34, 59, 0.6), rgba(34, 34, 59, 0.6)),-->
+<!--        url(/images/' + ${header.imageUrl} + ')'">-->
     <div class="container">
         <h1 class="display-3 fw-bold text-white mb-3" th:text="${header.title}">The Artist Behind the Canvas</h1>
         <p class="lead text-white-50 fs-4" th:text="${header.subtext}">Exploration, Emotion, and Expression</p>
@@ -259,7 +262,8 @@
             <div class="col-md-4 fade-in delay-1" th:each="award:${awards}">
                 <div class="art-card h-100">
                     <div class="art-card-img-container" style="padding-top: 60%;">
-                        <img th:src="@{'/images/' + ${award.imageUrl}}" alt="Award 1">
+                        <img th:src="${award.imageUrl}" alt="Award 1">
+<!--                        <img th:src="@{'/images/' + ${award.imageUrl}}" alt="Award 1">-->
                     </div>
                     <div class="art-overlay-info">
                         <h5 class="text-primary" th:text="${award.title}">International Art Excellence</h5>
