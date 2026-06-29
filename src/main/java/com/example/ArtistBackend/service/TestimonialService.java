@@ -19,8 +19,8 @@ import java.util.UUID;
 @Service
 public class TestimonialService {
 
-    @Value("${artistry.upload.dir:uploads/}")
-    private String uploadDir;
+//    @Value("${artistry.upload.dir:uploads/}")
+//    private String uploadDir;
 
     @Autowired
     private TestimonialRepo testimonialRepo;

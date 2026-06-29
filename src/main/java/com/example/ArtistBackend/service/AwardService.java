@@ -19,8 +19,10 @@ import java.util.UUID;
 
 @Service
 public class AwardService {
-    @Value("${artistry.upload.dir:uploads/}")
-    private String uploadDir;
+//    @Value("${artistry.upload.dir:uploads/}")
+//    private String uploadDir;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @Autowired
     private AwardRepo awardRepo;
@@ -28,14 +30,15 @@ public class AwardService {
     public Awards saveAwards(Awards awards, MultipartFile imageFile) throws IOException{
         if (imageFile != null && !imageFile.isEmpty()) {
 //            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-            awards.setImageUrl(fileName);
+//            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
+//            Path uploadPath = Paths.get(uploadDir);
+//            if (!Files.exists(uploadPath)) {
+//                Files.createDirectories(uploadPath);
+//            }
+//            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
+//                    StandardCopyOption.REPLACE_EXISTING);
+            String imageUrl = cloudinaryService.uploadImage(imageFile);
+            awards.setImageUrl(imageUrl);
 
         }
         return awardRepo.save(awards);
@@ -61,21 +64,22 @@ public class AwardService {
         existing.setAwardDate(awards.getAwardDate());
 
         if (imageFile != null && !imageFile.isEmpty()) {
-            String oldImgUrl = existing.getImageUrl();
-            if (oldImgUrl != null && !oldImgUrl.isBlank()) {
-//                String oldFileName = oldImgUrl.replace("/images/", "");
-                Path oldPath = Paths.get(uploadDir).resolve(oldImgUrl);
-                Files.deleteIfExists(oldPath);
-            }
+//            String oldImgUrl = existing.getImageUrl();
+//            if (oldImgUrl != null && !oldImgUrl.isBlank()) {
+////                String oldFileName = oldImgUrl.replace("/images/", "");
+//                Path oldPath = Paths.get(uploadDir).resolve(oldImgUrl);
+//                Files.deleteIfExists(oldPath);
+//            }
 
 //            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
 //            String fileName = imageFile.getOriginalFilename();
-            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
-            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-            existing.setImageUrl(fileName);
+//            String fileName = FileUploadUtil.generateFileName(imageFile.getOriginalFilename());
+//            Path uploadPath = Paths.get(uploadDir);
+//            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+//            Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName),
+//                    StandardCopyOption.REPLACE_EXISTING);
+            String imageUrl = cloudinaryService.uploadImage(imageFile);
+            existing.setImageUrl(imageUrl);
         }
         awardRepo.save(existing);
     }

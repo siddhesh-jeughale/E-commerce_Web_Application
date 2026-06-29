@@ -18,8 +18,8 @@ import java.util.UUID;
 
 @Service
 public class HomeHeroService {
-    @Value("${artistry.upload.dir:uploads/}")
-    private String uploadDir;
+//    @Value("${artistry.upload.dir:uploads/}")
+//    private String uploadDir;
 
     @Autowired
     private HomeHeroRepo homeHeroRepo;

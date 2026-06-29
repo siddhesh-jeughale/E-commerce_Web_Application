@@ -20,8 +20,8 @@ import java.util.UUID;
 
 @Service
 public class GalleryHeaderService {
-    @Value("${artistry.upload.dir:uploads/}")
-    private String uploadDir;
+//    @Value("${artistry.upload.dir:uploads/}")
+//    private String uploadDir;
 
     @Autowired
     private GalleryRepo galleryRepo;

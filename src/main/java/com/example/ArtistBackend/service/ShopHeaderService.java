@@ -18,8 +18,8 @@ import java.util.UUID;
 
 @Service
 public class ShopHeaderService {
-    @Value("${artistry.upload.dir:uploads/}")
-    private String uploadDir;
+//    @Value("${artistry.upload.dir:uploads/}")
+//    private String uploadDir;
 
     @Autowired
     private ShopRepo shopRepo;
