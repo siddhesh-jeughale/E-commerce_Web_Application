@@ -123,7 +123,9 @@
         th:each="header:${headers}"
         th:style="'background-image:
          linear-gradient(rgba(34, 34, 59, 0.6), rgba(34, 34, 59, 0.6)),
-        url(' + ${header.imageUrl} + ')'">
+        url(' + ${header.imageUrl} + '),
+        background-size: cover,
+        background-position: center'">
 <!--        th:style="'background-image:-->
 <!--         linear-gradient(rgba(34, 34, 59, 0.6), rgba(34, 34, 59, 0.6)),-->
 <!--        url(/images/' + ${header.imageUrl} + ')'">-->
