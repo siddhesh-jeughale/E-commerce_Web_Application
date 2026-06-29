@@ -274,6 +274,9 @@ h2.section-title {
     margin-top: -76px; /* Pull behind navbar */
     padding-top: 76px;
     background-attachment: fixed; /* Parallax effect */
+    background-size: cover;
+    background-position: center;
+
 }
 
 /* =========================================
