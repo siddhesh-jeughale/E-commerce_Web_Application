@@ -39,7 +39,7 @@
                         <tbody>
                         <tr th:each="hero :${heroList}">
                             <td>
-                                <img th:src="@{'/images/'+${hero.imageUrl}}" class="admin-thumb">
+                                <img th:src="${hero.imageUrl}" class="admin-thumb">
                             </td>
                             <td th:text="${hero.heading}">Emotions on Canvas</td>
                             <td>
@@ -128,7 +128,7 @@
                         <tbody>
                         <tr th:each="testimonial:${testimonials}">
                             <td>
-                                <img th:src="@{'/images/'+${testimonial.imageUrl}}" class="admin-thumb">
+                                <img th:src="{testimonial.imageUrl}" class="admin-thumb">
                             </td>
                             <td>
                                 <span th:text="${testimonial.clientName}">Sarah Johnson</span><br>
@@ -195,7 +195,7 @@
                         <tbody>
                         <tr th:each="pageHeader:${pageHeaders}">
                             <td>
-                                <img th:src="@{'/images/'+${pageHeader.imageUrl}}" class="admin-thumb">
+                                <img th:src="${pageHeader.imageUrl}" class="admin-thumb">
                             </td>
                             <td th:text="${pageHeader.title}">About the Artist</td>
                             <td th:text="${pageHeader.subtext}">Milestones in my journey</td>
@@ -249,7 +249,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="award :${awards}">
-                            <td><img th:src="@{'/images/'+${award.imageUrl}}" class="admin-thumb"></td>
+                            <td><img th:src="${award.imageUrl}" class="admin-thumb"></td>
                             <td th:text="${award.title}">International Art Excellence</td>
                             <td th:text="${award.subtitle} + ' • ' + ${award.createdDate.year}">First Prize • 2023</td>
                             <td class="text-end">
@@ -308,7 +308,7 @@
                         <tbody>
                         <tr th:each="galleryHeader:${galleryHeaders}">
                             <td>
-                                <img th:src="@{'/images/'+${galleryHeader.imageUrl}}" class="admin-thumb">
+                                <img th:src="${galleryHeader.imageUrl}" class="admin-thumb">
                             </td>
                             <td th:text="${galleryHeader.title}">About the Artist</td>
                             <td th:text="${galleryHeader.subtext}">Milestones in my journey</td>
@@ -422,7 +422,7 @@
                         <tbody>
                         <tr th:each="shopHeader:${shopHeaders}">
                             <td>
-                                <img th:src="@{'/images/'+${shopHeader.imageUrl}}" class="admin-thumb">
+                                <img th:src="${shopHeader.imageUrl}" class="admin-thumb">
                             </td>
                             <td th:text="${shopHeader.title}">About the Artist</td>
                             <td th:text="${shopHeader.subtext}">Milestones in my journey</td>
@@ -478,7 +478,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="exhibition :${exhibitions}">
-                            <td><img th:src="@{'/images/'+${exhibition.imageUrl}}" class="admin-thumb"></td>
+                            <td><img th:src="${exhibition.imageUrl}" class="admin-thumb"></td>
                             <td><span class="badge bg-success" th:text="${exhibition.yearBadge}">March 2024</span></td>
 <!--                            <td th:text="${exhibition.title}">"Urban Rhythms"<br>-->
 <!--                                <small class="text-primary" th:text="${exhibition.type}">Solo Exhibition</small>-->
@@ -543,7 +543,7 @@
                         <tbody>
                         <tr th:each="contactHeader:${contactHeaders}">
                             <td>
-                                <img th:src="@{'/images/'+${contactHeader.imageUrl}}" class="admin-thumb">
+                                <img th:src="${contactHeader.imageUrl}" class="admin-thumb">
                             </td>
                             <td th:text="${contactHeader.title}">About the Artist</td>
                             <td th:text="${contactHeader.subtext}">Milestones in my journey</td>
