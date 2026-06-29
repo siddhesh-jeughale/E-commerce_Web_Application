@@ -20,8 +20,8 @@ import java.util.UUID;
 
 @Service
 public class AboutHeaderService {
-    @Value("${artistry.upload.dir:uploads/}")
-    private String uploadDir;
+//    @Value("${artistry.upload.dir:uploads/}")
+//    private String uploadDir;
 
     @Autowired
     private AboutRepo aboutRepo;
