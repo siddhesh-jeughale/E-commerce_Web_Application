@@ -125,7 +125,7 @@
             <div class="carousel-item "
                  th:each="hero,stat :${heroLists}"
                  th:classappend="${stat.index == 0} ? ' active'"
-                 th:style="'background-image: url(${hero.imageUrl})'">
+                 th:style="'background-image: url(' + ${hero.imageUrl} + ')'">
                 <div class="carousel-caption-custom">
                     <h1 th:text="${hero.heading}">Emotions on Canvas</h1>
                     <p th:text="${hero.subtext}">Discover a world of vibrant abstract expressionism and contemporary fine art.</p>

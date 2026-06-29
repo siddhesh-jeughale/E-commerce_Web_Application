@@ -126,7 +126,7 @@
         th:each="header:${headers}"
         th:style="'background-image:
          linear-gradient(rgba(34, 34, 59, 0.6), rgba(34, 34, 59, 0.6)),
-        url(${header.imageUrl})'">
+        url(' + ${header.imageUrl} + ')'">
     <div class="container">
         <h1 class="display-3 fw-bold text-white mb-3" th:text="${header.title}">Get in Touch</h1>
         <p class="lead text-white-50 fs-4" th:text="${header.subtext}">Commissions, Collaborations, and Studio Visits</p>
