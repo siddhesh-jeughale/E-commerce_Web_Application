@@ -128,7 +128,7 @@
                         <tbody>
                         <tr th:each="testimonial:${testimonials}">
                             <td>
-                                <img th:src="{testimonial.imageUrl}" class="admin-thumb">
+                                <img th:src="${testimonial.imageUrl}" class="admin-thumb">
                             </td>
                             <td>
                                 <span th:text="${testimonial.clientName}">Sarah Johnson</span><br>
